@@ -1,0 +1,68 @@
+1. Why do programmers use pseudocode?
+Programmers use pseudocode because it helps them to develop algorithms. It's a way to express what code should be doing without using a specific language syntax.
+
+2. If you run pseudocode on your computer what would happen?
+Nothing would happen because it's fake code and not an actual language that a computer would recognize. It's used for the purpose of humans to read, not machines.
+
+--------------
+
+1. Create a function that takes two numbers and prints out the greater number.
+
+INPUT first number
+INPUT second number
+IF the first number is greater than the second number THEN
+	PRINT first number
+ELSE
+	PRINT second number
+END IF
+
+2. Create a function that prints out the numbers from 1 to 100.
+
+SET counter to 0
+IF counter is less than 101 THEN
+	ADD 1 until counter reaches 101
+END FOR
+RETURN result
+
+3. Create a function that searches for a specific entry in a phonebook.
+
+INPUT search value
+GATHER listed items
+COMPARE if value matches list item THEN
+	DISPLAY list item
+ELSE
+	DISPLAY none
+RETURN result
+
+4. Using the pseudocode you wrote for the previous question, implement it in any computer language of your choice.
+
+// Get input element
+let filterInput = document.getElementById('filterInput');
+
+// Add event listener
+filterInput.addEventListener('keyup',filterNames);
+
+function filterNames(){
+// Get value of input
+let filterValue=
+document.getElementById('filterInput').value.toUpperCase();
+
+// Get names ul
+let ul = document.getElementById('names');
+
+//get lis from ul
+let li = ul.querySelectorAll('li.collection-item');
+
+// Loop through collection-item list
+for(let i=0; i < li.length; i++){
+let a = li[i].getElementsByTagName('a')[0];
+// if matched
+if (a.innerHTML.toUpperCase().indexOf(filterValue) >
+-1 {
+  li[i].style.display = '';
+  } else {
+  li[i].style.display = 'none';
+  }
+}
+
+
