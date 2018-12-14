@@ -1,0 +1,128 @@
+1. In your own words, explain what clean code is and why it is important.
+
+Clean code is when code is easy to read, interpret, and understand. It's important because you're not the only one that's going to be reading the code, but your coworkers and other developers are going to be reading it too. It's important to keep it clean for others to be able to interpret and understand to prevent the hassle of them having to waste time figuring stuff out and asking questions. 
+
+2. The public depends on amusement park rides to be safe. Kids, adults, and older folks are putting their lives at risk to have fun. One malfunction can lead to the death of many as these people's bodies are on the rides and are dependent on the machine and software working properly. The physical construction of amusement rides are one thing but when you also mix that with software issues, it's a deadly mix. When code is not created to acceptable standards, you'd have bodies flying everywhere instead of those fun little darts at the dart stand. 
+
+3. The code is not clean. First off, you have your comments on the right side and that makes it harder to read the comments and code. Also, there are way too many comments. You don't need to comment on everything you do. The code is also not nested/displayed correctly (but that could be due to the way the comments are formatted). The biggest problem is that the variables are not clearly represented.  Refactored:
+
+FUNCTION convertedTemperature(temp, unit)               
+ IF unit = "F" THEN              
+ 	SET convertedTemperature to (temp−32) * (5/9)       
+ PRINT convertedTemperature  
+
+ ELSE IF unit = "C" THEN        
+ 	SET convertedTemperature to x * 1.8000 + 32.00   
+ PRINT convertedTemperature                       
+ END IF
+END FUNCTION
+
+4. I would consider this clean code because you have your function at the top and right below it, it clearly tells you what the function should do, as it's nested properly too. No more than 2 nests deep. There's a space between END IF and PRINT percentage because it's separating the function operation from the print operation. 
+
+5a.Using pseudocode, refactor the code for the following examples using the principles you have learned in this checkpoint.
+
+FUNCTION checkOutCustomer(subTotal, discountRate, paymentType)
+	PRINT "Your total due is: " + subTotal * discountRate + (subTotal * tax)
+END FUNCTION
+
+FUNCTION processPayment(subTotal, discountRate, paymentType)
+	IF paymentType = 'CASH' THEN
+       	  CALL getPayment RETURNING amount
+PRINT "Change due: " + amount - subTotal * discountRate + (subTotal * tax)
+
+ELSE IF paymentType = 'CREDIT CARD' THEN
+          CALL getPayment RETURNING amount
+PRINT "Your credit card has been charged: " + subTotal * discountRate + (subTotal * tax)
+
+	END IF
+END FUNCTION
+
+5b.
+
+FUNCTION checkoutBook (book, guest)
+IF checkGuestAccount(guest)
+	APPEND book to guest.books
+	SET book.status to "Checked Out"
+	PRINT "Your books have been issues."
+
+ELSE
+	PRINT "Unable to check out book."
+END IF
+END FUNCTION
+
+FUNCTION checkGuestAccount(guest)
+	RETURN guest.accountActive and NOT (guest.hasOverdueBooks) AND guest.outstandingFees = 0
+END FUNCTION
+
+5c.
+CLASS BankAccount
+FUNCTION displayBalance
+    PRINT balance
+END FUNCTION
+
+FUNCTION deposit(amount)
+    SET balance to balance + amount
+END FUNCTION
+
+FUNCTION withdraw(amount)
+IF balance > amount THEN
+    SET balance to balance - amount
+    END
+END FUNCTION
+
+CLASS CreditCard
+FUNCTION creditCardOffer
+     IF NOT(customer.hasCreditCard) THEN
+     CALL offerCreditCard
+END
+END FUNCTION
+
+CLASS CheckingAccount
+FUNCTION checkStatus
+     IF NOT(customer.hasCheckingAccount) THEN
+     CALL offerCheckingAccount
+END
+END FUNCTION
+
+ ....
+ ....
+ ....
+
+END
+
+6.
+
+function isPerfectSquare(array) {
+  sum = 0;
+  for (var i=0; i<array.length; i++) {
+    sum += array[i]
+  }
+  if (Math.sqrt(sum)%1 === 0) {
+    return Math.sqrt(sum);
+  } return sum;
+}
+
+7.
+
+function hasDuplicates(array) {
+    var numbersSoFar = [];
+    for (var i = 0; i < array.length; ++i) {
+        var number = array[i];
+        if (numbersSoFar.indexOf(number) !== -1) {
+            return true;
+        }
+        numbersSoFar.push(number);
+    }
+    return false;
+};
+
+8.
+
+function isAnagram (stringOne, stringTwo) {
+  return ( sortString(stringOne) === sortString(stringTwo) )
+}
+
+function sortString(string) {
+  return string.split("").sort().join("")
+}
+
