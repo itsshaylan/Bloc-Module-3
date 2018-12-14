@@ -1,0 +1,23 @@
+1A. var parkMembers = ["Vivan", "Ava", "Josh", "Patrick", "Mike"]
+
+1B. parkMembers.push("Mary") // returns
+var parkMembers = ["Vivan", "Ava", "Josh", "Patrick", "Mike", "Mary"]
+
+1C. parkMembers.indexOf("Josh") // returns 2
+
+1D. parkMembers.includes("Emily") // returns false
+
+1E. parkMembers.splice(1, 0, "Melissa")
+
+1F. 
+
+var deletePerson = "Josh";
+for (var i = parkMembers.length-1; i >=0; i--) {
+	if (parkMembers[i] === deletePerson) {
+	parkMembers.splice(i,3);
+	}
+}
+
+2. Hierarchy in the workplace can be represented in a tree data structure, kind of like the DOM. The top of the chain is the owner and beneath the owner is the general manager. Below is the supervisors and below that are the employees. 
+
+3. With using a tree structure, developers can find the problem, access how big the problem is, and deduce from that on where in the hierarchy the problem is stemming from. 
