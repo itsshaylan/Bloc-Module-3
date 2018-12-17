@@ -1,58 +1,57 @@
 1. 	Making coffee
 
-1. Gather mug
-2. Gather empty coffee pot
-3. Plug in coffee maker
-4. Allow water to heat up
-5. Gather coffee grounds and filter
-6. Scoop desired amount of coffee grounds in filter
-7. place filter in coffee maker basket
-8. Place empty coffee pot underneath brewing area
-9. Press "Start"
-10. Wait until coffee is done brewing
-11. Pour coffee into mug
-12. Enjoy
+GET mug
+GET empty coffee pot
+GET coffee grounds
+GET coffee maker
 
-	Washing dishes
-1. Turn on water to warm
-2. Grab dishes one by one
-3. Rinse dishes one by one making sure to rinse most residue off
-4. turn off water
-5. Sort dishes so that shape goes with shape
-6. Aquire sponge
-7. Aquire soap
-8. Squeeze soap onto sponge
-9. Grab dishes one at a time
-10. Scrub dishes
-11. Place scrubbed dishes aside in previously organize stacks
-12. Wash sponge of all soap
-13. Put away sponge
-14. Turn water on to cold
-15. Take dishes one by one
-16. Rinse dishes until soap is all gone
-17. Place clean but wet dishes onto dish rack until sink is emptied
-18. Rinse sink with warm water
-19. Turn off water
+SET coffee maker to "on"
+SET ground coffee in coffee maker basket
+SET mug under brewer
+SET brew switch
+IF coffee is done brewing
+	THEN turn off coffee maker
+ELSE
+	LEAVE coffee maker on
+
+2.	Washing dishes
+
+GET sink
+GET dirty plates
+GET sponge
+GET soap
+GET drying rack
+
+WHILE dishes are dirty
+	APPLY soap, sponge, and water until clean
+ENDWHILE
+
 
 	Scramble eggs
-1. Aquire eggs
-2. Aquire measuring cup
-3. Aquire spatula
-4. Aquire fork
-5. Aquire pan
-6. Aquire plate
-7. Place pan on stovetop
-8. Heat pan on medium heat
-9. Crack desired amount of eggs into measuring cup
-10. Take fork and start whisking eggs until yolk and whites are combined
-11. Our egg mixture into pan
-12. Set measuring cup and fork in sink
-13. Take spatula and gradually stir/fold eggs slowly, approx. every 5 seconds to start out with
-14. After eggs start cooking a bit faster, stir/fold eggs every 2 seconds
-15. Once eggs are cooked and at desired scrambled level, turn off stove
-16. Grab plate and set aside
-17. Lift pan and scoop eggs onto plate using spatula
-18. Place pan and spatula in sink
+GET eggs
+GET measuring cup
+GET spatula
+GET fork
+GET pan
+GET plate
+GET stove
+
+SET PAN on stove to medium heat
+GATHER desired number of eggs
+FOR every egg cracked in pan
+	DELETE eggs into trashcan
+REPEAT 
+	egg cracking and disposal
+UNTIL
+	all desired eggs are in trash
+
+SET spatula stirring in eggs
+
+WHILE eggs are runny
+	CONTINUE stirring eggs until firm
+ENDWHILE
+
+SET scrambled eggs on plate 
 
 2. Google Maps is revolutionary and has changed the way we see navigation. It is the mostt popular navigation app by a wide margin (67%). It has features like, satellite and street view. You can see exact coordinates, plan trips with multiple stops, and a bunch of various/endless features that are useful. 
 
