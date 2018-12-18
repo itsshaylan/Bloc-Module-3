@@ -1,0 +1,81 @@
+1. The main difference between a stack and a queue is that stacks are LIFO as in Last In, First Out, while a queue is based on First In, First Out. 
+
+1. The similarities between stacks and queues is that they are both linear data structure, meaning that there is one thing after another, after another. They are also flexible in size. 
+
+3.I would use a stack data structure for UNDO and REDO buttons.  When you undo something, you're going BACK to the VERY LAST change you made. You need to push that very last thing and go back. The same goes to the REDO button. You're going back to the very last thing before you hit the UNDO button therefore it's still one of the very last items in your stack. 
+
+-----------------------
+
+1. My function needs to implement a stack data structure. I need to make the very last letters/symbols output first in order to have the words outputted in reverse. 
+
+function reverse(str){
+  let reversed = "";    
+  for (var i = str.length - 1; i >= 0; i--){        
+    reversed += str[i];
+  }    
+  return reversed;
+}
+
+2.
+
+ class Stack {
+    constructor(){
+     this.pop = function(queue){
+       var newQueue = [];
+       var itemToRemove = [];
+       
+       for(var i=0;i<queue.length; i++){
+         if(i==queue.length-1){
+           itemToRemove.push(queue[i]);
+         }else{
+           newQueue.push(queue[i]);
+         }
+       }
+       
+       return itemToRemove;   
+       
+     }
+   }
+}
+
+var stack = new Stack();
+console.log(stack.pop('Shayla'))
+
+3. 
+
+class Queue {
+   constructor(){
+     this.elements = []
+   }
+  
+ // enqueue function
+
+  enqueue(element)
+{    
+    this.elements.push(element);
+}
+
+  // dequeue function
+
+  dequeue()
+{
+    if(this.isEmpty())
+        return "Empty";
+    return this.elements.shift();
+}
+  
+isEmpty()
+{
+    return this.elements.length ==0;
+}
+
+}
+
+var queue = new Queue();
+
+queue.enqueue(10)
+queue.enqueue(10)
+
+console.log(queue)
+queue.dequeue()
+console.log(queue)
