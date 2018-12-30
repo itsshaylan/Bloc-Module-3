@@ -1,0 +1,107 @@
+>What is a hash table?
+
+A hash table is a type of data structure that stores each value by linking it to a key, forming key-value pairs.
+
+>What is hashing?
+
+Hashing is the conversion from a string to a numerical index.
+
+>How does a hash table store data?
+
+A simile I could use is that a hash table is kind of like an amazon package. You have your purchase(value) in the package and the shipping label is like the key and hash code. For each package, there's a unique and individual key and hash code to identify the information of the package. 
+
+>How are hash tables and objects different?
+
+They are pretty similar except that a javascript object doesn't have a code or key that associates with accessing the information stored in an object unless you can't calling the object by it's name. You access properties on an object with dot notation or bracket notation.
+
+>Determine whether you would use a hash table or an object to store each of the following pieces of data:
+
+>A list of pets and their unique names.
+
+Object
+
+>The name, age, and the birthday of your best friend.
+
+Hash table
+
+>The name and location of every company in a given city.
+
+Hash table
+
+>All of the books checked out from a library by a particular individual.
+
+Hash table
+
+>The primary and secondary phone numbers for a contact.
+
+Object
+
+>Build a system that allows a sales associate to enter a customer's name, address, and phone number into the system and look up customers using their phone numbers. Store this information in a hash table.
+
+class CustomerHashTable {
+  constructor() {
+    this.list = [];
+  }   
+  
+  
+  getByPhoneNumber(phonenumber) {
+    return this.list[phonenumber];
+  }
+
+  set(name, address, phonenumber) {
+    this.list[phonenumber] =[name, address, phonenumber];
+  }
+}
+
+console.log("Entering customer details into the system");
+var table = new CustomerHashTable();
+for(var i=1; i<10; i++){
+  table.set("name "+i, "Address "+i, "phonenumber "+i);
+}
+console.log(table.getByPhoneNumber("phonenumber 2"));
+
+>Build a system that allows a store owner to track their store's inventory using a hash table for storage.
+
+class InventoryHashTable {
+  constructor() {
+    this.list = [];
+  }   
+  
+  set(item, count, serial) {
+    this.list[serial]=[item, count, serial];
+  }
+}
+
+console.log("Entering inventory into the system");
+var table = new InventoryHashTable();
+for(var i=1; i<10; i++){
+  table.set("item "+i, "count "+i, "serial"+i);
+}
+
+for(var index in table.list) {
+  console.log("no. "+ index +" - Name: "+ table.list[index][0]+ " Count: "+ table.list[index][1]);
+}
+
+>Build a system that allows digital copies of newspapers to be entered and searched by publisher and publication date. Use hash tables to store the necessary data.
+
+class NewspaperHashTable {
+  constructor() {
+    this.list = [];
+  }   
+ 
+  get(publisher, date) {
+    return this.list[publisher+date];
+  }
+
+  set(name, publisher, date) {
+    this.list[publisher+date]=[name, publisher, date];
+  }
+}
+
+console.log("Entering newspapers into the system");
+var table = new NewspaperHashTable();
+for(var i=1; i<10; i++){
+  table.set("name "+i, "publisher "+i, "2018-12-28"+i);
+}
+
+console.log(table.get("publisher 1", "2018-12-28"));
