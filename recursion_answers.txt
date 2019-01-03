@@ -1,0 +1,58 @@
+1. Define and compare recursion and iteration.
+
+The defining part of recursion vs iteration is that with a recursive function, it calls itself. With iteration, yes, you're going looping through and through but you have no base cases to let the function know when to stop. 
+
+
+2. Name five algorithms that are commonly implemented by recursion.
+
+Factorial, greatest common divisor, fibonacci numbers, recursive binary search, and reversing a string.
+
+3.When should you use recursion, and when should you avoid recursion? Give examples for each.
+
+You should use iteration over recursion when you want to loop through something to search and keep going until you can't. Recursion should be used when your main goal is to try and get a result by using base cases to eliminate some repetitiveness. For example, if you're trying to find the maximum number in a set, you'd want to use iteration. With iteration, it knows to take the number that it comes across and compares it to every number in the set to see if that number is higher than the rest. It takes less steps to loop through the set. When using recursion to find the maximum number, it takes more steps. With recursion, the equation takes the first number and compares it to the next. It saves the highest number. This repeats until it gets to the very end of the set therefore making recursion in this example more time consuming. An example of using recursion is with finding the factorial of a number. You wouldn't want to use iteration because you're trying to call itself (the function) with the number minus one, returning the previous factorial. This is basically "saving" information to be used later. 
+
+
+4. Compare the recursive and iterative solutions to the three algorithms from the checkpoint (factorial, maximum, and fibonacci). What is similar, and what is different?
+
+With factorial, the similarity is both of the solutions with recursion and iteration return an error if the number is less than zero. They both also fail at negative numbers. Using iteration, it loops through a for loop, and setting a result each time. When using recursion, the function calls itself and keeps repeating the process by subtracting one from each number. 
+
+See answer to question 3 for maximum.
+
+With fibonacci, the recursive algorithm implements two base cases. The function will call itself twice, computing twoBack and oneBack then adding them to return a result. This is a good way to solve the algorithm when numbers are increasing. The iterative solution keeps track of two numbers to add in the variables, which the first two numbers are one. Then you set up a loop to iterate only when the number is greater than or equal to three. The next step is similar to recursion, you add the two last numbers to get the next number.
+
+5.Given a multi-dimensional collection (such as an array) where the number of dimensions is unknown, write a recursive algorithm to count the number of items in the entire collection.
+
+function countArr(array){
+  if(array.length){
+    if(typeof array[0] === "object"){
+      return countArr(array[0]) + countArr(array.slice(1));
+    } else {
+      return 1 + countArr(array.slice(1));
+    }
+  } else {
+    return 0;
+  }
+}
+
+countArr([2, 4, 5, 6, 7, 3, 2, 4]) // returns 8
+ 
+6. A palindrome is a word or phrase whose spelling is the same either direction (e.g., racecar). Write a recursive algorithm to determine if a given word or phrase is a palindrome.
+
+function isPalindrome(word) {
+  if (word.length === 0 || word.length === 1)
+    return true;
+
+  if (word[0] !== word[word.length -1])
+    return false;
+  
+  return isPalindrome(word.substr(1, word.length -2));
+}
+
+console.log(isPalindrome('racecar')); //returns true
+console.log(isPalindrome('apple')); //returns false
+console.log(isPalindrome('hannah')); //returns true
+
+
+7. Google Easter Egg: Google the term "recursion". Google will prompt you with "Did you mean: recursion". Explain why this behavior exhibits properties of recursion.
+
+Haha, clever. This exhibits properties of recursion because the result is basically calling itself. When you click on the word 'recursion', it brings you right back to the same exact page for you to do the exact same thing again. 
