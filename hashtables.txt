@@ -38,70 +38,211 @@ Object
 
 >Build a system that allows a sales associate to enter a customer's name, address, and phone number into the system and look up customers using their phone numbers. Store this information in a hash table.
 
-class CustomerHashTable {
-  constructor() {
-    this.list = [];
-  }   
+var hash = (string, max) => {
+  var hash = 0;
+  for (var i = 0; i < string.length; i++) {
+    hash += string.charCodeAt(i);
+  }
+  return hash % max;
+};
+
+let hashTable = function() {
+
+  let customers = [];
+  const storageLimit = 10;
   
-  
-  getByPhoneNumber(phonenumber) {
-    return this.list[phonenumber];
+  this.print = function() {
+    console.log(customers)
   }
 
-  set(name, address, phonenumber) {
-    this.list[phonenumber] =[name, address, phonenumber];
-  }
-}
+  this.add = function(phone, name, address) {
+    var index = hash(phone, storageLimit);
+    if (customers[index] === undefined) {
+      customers[index] = [
+        [phone, name, address]
+      ];
+    } else {
+      var inserted = false;
+      for (var i = 0; i < customers[index].length; i++) {
+        if (customers[index][i][0] === phone) {
+          customers[index][i][1] = name;
+          inserted = true;
+        }
+      }
+      if (inserted === false) {
+        customers[index].push([phone, name, address]);
+      }
+    }
+  };
+  
+    
+  this.find = function(phone) {
+    var index = hash(phone, storageLimit);
+    if (customers[index] === undefined) {
+      return "No results found";
+    } else {
+      for (var i = 0; i < customers[index].length; i++) {
+        if (customers[index][i][0] === phone) {
+          return customers[index][i][1];
+        }
+      }
+    }
+  };
 
-console.log("Entering customer details into the system");
-var table = new CustomerHashTable();
-for(var i=1; i<10; i++){
-  table.set("name "+i, "Address "+i, "phonenumber "+i);
-}
-console.log(table.getByPhoneNumber("phonenumber 2"));
+};
+
+let customerList = new HashTable();
+customerList.add('5124531129', 'Julie Ni', '8448 W Central');
+customerList.add('3165193910', 'Christian Withers', '612 E Douglas');
+customerList.add('8264990121', 'George Ni', '210 Emporia Ave');
+customerList.add('3165167802', 'Fred Sosa', '132 S Lincoln');
+customerList.add('3162278400', 'Yanette Candelas', '8865 Main St');
+console.log(customerList.find('3165193910'));
+console.log(customerList.find('3162278400'));
+console.log(customerList.find('8264990121'));
+customerList.print();
+
 
 >Build a system that allows a store owner to track their store's inventory using a hash table for storage.
 
-class InventoryHashTable {
-  constructor() {
-    this.list = [];
-  }   
-  
-  set(item, count, serial) {
-    this.list[serial]=[item, count, serial];
+var hash = (string, max) => {
+  var hash = 0;
+  for (var i = 0; i < string.length; i++) {
+    hash += string.charCodeAt(i);
   }
-}
+  return hash % max;
+};
 
-console.log("Entering inventory into the system");
-var table = new InventoryHashTable();
-for(var i=1; i<10; i++){
-  table.set("item "+i, "count "+i, "serial"+i);
-}
+let HashTable = function() {
 
-for(var index in table.list) {
-  console.log("no. "+ index +" - Name: "+ table.list[index][0]+ " Count: "+ table.list[index][1]);
-}
+  let items = [];
+  const storageLimit = 10;
+  
+  this.print = function() {
+    console.log(items)
+  }
+
+  this.add = function(itemName, quantity) {
+    var index = hash(itemName, storageLimit);
+    if (items[index] === undefined) {
+      items[index] = [
+        [itemName, quantity]
+      ];
+    } else {
+      var inserted = false;
+      for (var i = 0; i < items[index].length; i++) {
+        if (items[index][i][0] === itemName) {
+          items[index][i][1] = quantity;
+          inserted = true;
+        }
+      }
+      if (inserted === false) {
+        items[index].push([itemName, quantity]);
+      }
+    }
+  };
+  
+    
+  this.find = function(itemName) {
+    var index = hash(itemName, storageLimit);
+    if (items[index] === undefined) {
+      return undefined;
+    } else {
+      for (var i = 0; i < items[index].length; i++) {
+        if (items[index][i][0] === itemName) {
+          return items[index][i][1];
+        }
+      }
+    }
+  };
+
+};
+
+var itemsList = new HashTable();
+itemsList.add('plungers', '12');
+itemsList.add('notebooks', '32');
+itemsList.add('bananas', '88');
+itemsList.add('snuggies', '6');
+console.log(itemsList.find('plungers'));
+console.log(itemsList.find('notebooks'));
+console.log(itemsList.find('bananas'));
+console.log(itemsList.find('snuggies'));
+itemsList.print();
+
 
 >Build a system that allows digital copies of newspapers to be entered and searched by publisher and publication date. Use hash tables to store the necessary data.
 
-class NewspaperHashTable {
-  constructor() {
-    this.list = [];
-  }   
- 
-  get(publisher, date) {
-    return this.list[publisher+date];
+var hash = (string, max) => {
+  var hash = 0;
+  for (var i = 0; i < string.length; i++) {
+    hash += string.charCodeAt(i);
+  }
+  return hash % max;
+};
+
+let HashTable = function() {
+
+  let papers = [];
+  const storageLimit = 10;
+  
+  this.print = function() {
+    console.log(papers)
   }
 
-  set(name, publisher, date) {
-    this.list[publisher+date]=[name, publisher, date];
-  }
-}
+  this.add = function(name, publisher, date) {
+    var index = hash(name, storageLimit);
+    if (papers[index] === undefined) {
+      papers[index] = [
+        [name, publisher, date]
+      ];
+    } else {
+      var inserted = false;
+      for (var i = 0; i < papers[index].length; i++) {
+        if (papers[index][i][0] === name) {
+          papers[index][i][1] = publisher;
+          inserted = true;
+        }
+      }
+      if (inserted === false) {
+        papers[index].push([name, publisher, date]);
+      }
+    }
+  };
+  
+    
+  this.find = function(publisher, date) {
+    var index = hash(publisher, storageLimit);
+    if (papers[index] === undefined) {
+      return "No results found";
+    } else {
+      for (var i = 0; i < papers[index].length; i++) {
+        if (papers[index][i][0] === publisher && papers[index][i][2] === date) {
+          return papers[index][i][1];
+        }
+      }
+    }
+  };
+  
+  this.date = function(date) {
+    var index = hash(date, storageLimit);
+    if (papers[index] === undefined) {
+      return "No results found";
+    } else {
+      for (var i = 0; i < papers[index].length; i++) {
+        if (papers[index][i][2] === date) {
+          return papers[index][i][0];
+        }
+      }
+    }
+  };
 
-console.log("Entering newspapers into the system");
-var table = new NewspaperHashTable();
-for(var i=1; i<10; i++){
-  table.set("name "+i, "publisher "+i, "2018-12-28"+i);
-}
+};
 
-console.log(table.get("publisher 1", "2018-12-28"));
+let newsList = new HashTable();
+newsList.add('NYT', 'New York Times', '09-08-2018');
+newsList.add('Dow Jones & Company', 'The Wall Street Journal', '02-22-2016');
+newsList.add('Tribune Publishing', 'Chicago Tribune', '02-05-2017');
+newsList.add('Fred Ryan', 'The Washington Post', '06-27-2018');
+console.log(newsList.find('The Wall Street Journal', '02-22-2016'));
+console.log(newsList.find('Chicago Tribune', '02-05-2017'));
+console.log(newsList.find('New York Times', '09-08-2018'))
