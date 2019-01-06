@@ -1,0 +1,86 @@
+1. What is a binary tree and what makes it unique to other trees?
+
+A binary search tree is a node-based binary tree structure. It contains a root node with subtrees. The left subtree of a node contains keys that are less than that node's keys. The right subtree contains nodes with keys that are greater than that node's key. A binary search tree is used for searching.
+
+2. What is a heuristic?
+
+A heuristic is a guess/guesses that an algorithm makes to solve a complex problem sooner by sacrificing accuracy.
+
+3. What is another problem besides the shortest-path problem that requires the use of heuristics?
+
+The longest path.
+
+4. What is the difference between a depth-first search and a breadth-first search?
+
+Depth-first search (DFS) is when the algorithm starts at the root and explores as far as possible along each branch (starting at the left-most) before backtracking. Breadth-first search (BFS) is when an algorithm starts at the root and explores the neighbor nodes first before moving to the next level neighbors. 
+
+5. Explain in your own words what an undirected, a-cyclic, unweighted graph is.
+
+An undirected graph is where the nodes simply link to each other, but there's no strict flow of traffic, meaning you can travel from A - B or B - A. There's no start point or end point.
+
+An a-cyclic graph is where the graph doesn't form any sort of loop. It will not link to a previous node. Nodes with link to one another but will never flow upwards to connect to the same node. They will always have a dead end. 
+
+An unweighted graph is where the edges don't have a cost or weight. With a weighted graph, there is an assigned value to each edge. 
+
+6. What kind of graph is a binary search tree?
+
+A binary search tree is an example of a a-cyclic graph. 
+
+PROGRAMMING QUESTIONS
+
+1. Given a Binary Search Tree and a value, write a function that checks to see whether the value exists within the tree.
+
+We will start out with the root node. If that number doesn't equal what we're searching for, then we will travel to the left node if the value is smaller than the root node's number. If the value is bigger, we will travel to the right child of the root. We will continue this process until we find the node. Exit the loop. If the value is not found, we'll return a statement. 
+
+function findNumber(numberToFind) {
+  var currentNode = this.root;
+
+  while (currentNode != null) {
+    if (numberToFind === currentNode.value) {
+      return "The value " + currentNode.value + " exists in the list";
+    } else if (numberToFind < currentNode.value){
+      currentNode = currentNode.left;
+    } else {
+      currentNode = currentNode.right;
+    }
+  }
+  return "The value " + numberToFind + " does not exist in the list";
+}
+
+2. Given a Binary Search Tree and two nodes, n1 and n2, write a function that finds the distance between the two nodes.
+
+This one is kind of similar to the first problem in a way. We do need to know the lowest common ancestor of the two nodes because it would tell us the path to take. 
+
+function getDistanace(root, node1, node2) {
+
+  var ancestor = LCA(root, node1, node2);
+  var depth1 = getDepth(root, ancestor); 
+  var depth2 = getDepth(root, node1); 
+  var depth3 = getDepth(root, node2); 
+
+  return depth2 + depth3 - 2 * depth1;
+}
+
+function LCA(currentNode, node1, node2) {
+  if (currentNode == null)
+    return null;
+  if (currentNode == node1 || currentNode == node2)
+    return currentNode;
+  var left = LCA(currentNode.left, node1, node2); 
+  var right = LCA(currentNode.right, node1, node2); 
+  if(left != null && right != null)
+    return currentNode;
+  return left == null? right: left;
+}
+
+function getDepth(currentNode, targetNode) {
+  if (currentNode == null)
+    return -1;
+  if (currentNode == targetNode)
+    return 0;
+  var left = getDepth(currentNode.left, targetNode);
+  var right = getDepth(currentNode.right, targetNode);
+  if (left == -1 && right == -1)
+    return -1;
+  return left == -1? right + 1: left + 1;
+}
