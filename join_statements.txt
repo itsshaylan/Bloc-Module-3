@@ -1,0 +1,157 @@
+1. How do you find related data held in two separate data tables?
+
+First you're going to see if the two tables have columns that are related. If so, we specify the JOIN clause.
+
+SELECT [tablename.category you want to show], [tablename.category you want to show]
+FROM [table 1]
+JOIN [table 2] ON [table1.relatedcategory] = [table2.relatedcategory]
+
+2. Explain, in your own words, the difference between an INNER JOIN, LEFT OUTER JOIN, and RIGHT OUTER JOIN. Give a real-world example for each.
+
+When using INNER JOIN, you're taking the categories and their record in BOTH the tables that are matching. Example: you have 2 tables and both of them have categories of "employee_id" and "employee_name". Real world example: playing a matching game. When you flip your 2 cards over and they match, you gather those two cards and put it to the side.
+
+When using LEFT OUTER JOIN, not only are you taking all the categories and their records from both tables and matching them to display, but you're also showing all the records from the left table, whether they are matching or not. Real world example: an attendance sheet from classrooms A and B. They are going on a field trip but some kids can't make it on the field trip. The two classes are going together and there is a substitute from classroom A that will stay behind and watch the kids who aren't going. She will read the attendance sheet of kids that are going on the field trip and take note of kids from classroom A that aren't going. Classroom b has their own substitute to watch their class so she won't need to know any students who aren't going from classroom b.
+
+RIGHT OUTER JOIN uses the same concept as LEFT OUTER JOIN, except you're matching all the related categories and their records but also showing all the records from the RIGHT table even if there is no corresponding data. For this example, you can reverse the example I stated above. There's a substitute looking out for classroom b while the kids are going on the field trip. The substitute will look at the attendance sheet for all the kids going and all the kids not going for classroom b. She doesn't need to worry about the kids in classroom A.
+
+3. Define primary key and foreign key. Give a real-world example for each.
+
+The primary key is defined as the unique identifier for each row in a database table. The foreign key is defined as the key of one table that is included as a non-unique attribute in another table. The difference between these two is that with a primary key, it cannot be null and can't be a duplicate. The foreign key creates the relationship between the two tables, while able to be null and/or a duplicate. 
+
+A real world example of a primary key and foreign key is looking up couches on Craigslist. You have your primary key, the search for a couch. Any listing of a couch would be the foreign key. Your primary key is the keyword "couch" because that's what we're uniquely identifying and the search results would be the foreign key because it's the byproduct of using the primary key. Yes, you're still looking for the word "couch" but there are many options and different listings. 
+
+4. Define aliasing.
+
+Aliasing in SQL is when you're changing the name of a table to a shorter version in order to save time in writing out the command. Pretty much abbreviating.
+
+5. Change this query so that you are using aliasing.
+
+Alias answer:
+
+SELECT p.name, c.salary, c.vacation_days 
+FROM professor AS p
+JOIN compensation AS c
+ON p.id = c.professor_id;
+
+6. Why would you use a NATURAL JOIN? Give a real-world example.
+
+Using NATURAL JOIN helps cut down on time and it's a short hand version of USING. If you have a bunch of related columns that you'd like to display, you'd have to list out every single one if you're using the USING command. With the NATURAL JOIN command, it will take every single common column automatically. These columns only appear once in the output. A real world example is using the self checkout. You have 8 apples to ring up. Instead of scanning those 8 apples individually, you can just increase the quantity to 8 in the computer to avoid repetition.
+
+7. List all employees and all shifts.
+
+SELECT employee.name
+FROM employees;
+SELECT * FROM shifts;
+
+8. 
+
+Create a list of all volunteers. If the volunteer is fostering a dog, include each dog as well:
+
+SELECT volunteers.first_name, dogs.name 
+FROM volunteers 
+LEFT OUTER JOIN dogs ON volunteers.foster_dog_id = dogs.id;
+
+Results: 
+first_name	  dog_name
+Rubeus	          Munchkin
+Marjorie	  Marmaduke
+Sirius	          null
+Remus	          null
+Albus	          null
+
+The cat's name, adopter's name, and adopted date for each cat adopted within the past month to be displayed as part of the "Happy Tail" social media promotion which posts recent successful adoptions:
+
+SELECT cats.name, adopters.first_name, adopters.last_name, cat_adoptions.date FROM cat_adoptions 
+JOIN cats ON cat_adoptions.cat_id = cats.id 
+JOIN adopters ON cat_adoptions.adopter_id = adopters.id 
+WHERE cat_adoptions.date >= (CURRENT_DATE - 30);
+
+Results:
+cat_name	    adopter_first_name	  adopter_last_name	adoption_date
+Mushi	            Arabella	          Figg       2018-07-20T00:00:00.000Z
+Victoire	    Argus	          Filch	     2018-07-25T00:00:00.000Z
+
+Create a list of adopters who have not yet chosen a dog to adopt:
+
+SELECT adopters.first_name 
+FROM adopters 
+LEFT JOIN dog_adoptions 
+ON adopters.id = dog_adoptions.adopter_id 
+WHERE dog_adoptions.adopter_id IS NULL;
+
+Results:
+first_name	    last_name
+Hermione	      Granger
+Arabella	      Figg
+
+Lists of all cats and all dogs who have not been adopted:
+
+SELECT cats.name AS animal_name
+FROM cats
+LEFT OUTER JOIN cat_adoptions
+ON cats.id = cat_adoptions.cat_id
+WHERE cat_adoptions.cat_id IS NULL
+UNION
+SELECT dogs.name 
+FROM dogs
+LEFT OUTER JOIN dog_adoptions
+ON dogs.id = dog_adoptions.dog_id
+WHERE dog_adoptions.dog_id IS NULL;
+
+Results:
+animal_name
+Boujee
+Lassie
+Marley
+Marmaduke
+Munchkin
+Nala
+Seashell
+
+The name of the person who adopted Rosco:
+
+SELECT adopters.first_name, adopters.last_name
+FROM adopters
+JOIN dog_adoptions
+ON adopters.id = dog_adoptions.adopter_id
+WHERE dog_adoptions.dog_id = 10007;
+
+Results:
+first_name	last_names
+Argus	        Filch
+
+9. 
+
+To determine if the library should buy more copies of a given book, please provide the names and position, in order, of all of the patrons with a hold (request for a book with all copies checked out) on "Advanced Potion-Making":
+
+SELECT patrons.name, holds.rank 
+FROM patrons 
+JOIN holds ON patrons.id = holds.patron_id 
+WHERE isbn = '9136884926';
+
+Results: 
+name	              rank
+Terry Boot	        1
+Cedric Diggory	    2
+
+List all of the library patrons. If they have one or more books checked out, list the books with the patrons:
+
+SELECT DISTINCT patrons.name, 
+  (SELECT book.title 
+  FROM (SELECT transactions.checked_in_date, transactions.patron_id, books.title 
+ 	FROM transactions 
+  	LEFT OUTER JOIN books ON books.isbn = transactions.isbn 
+	WHERE transactions.checked_in_date IS NULL) AS book 
+  WHERE book.patron_id = patrons.id) 
+FROM transactions 
+LEFT OUTER JOIN patrons ON transactions.patron_id = patrons.id 
+LEFT OUTER JOIN books ON books.isbn = transactions.isbn;
+
+
+Results:
+name				title
+Cedric Diggory			Fantastic Beasts and Where to Find Them
+Cho Chang			null
+Hermione Granger		null
+Padma Patil			null
+Terry Boot			Advanced Potion-Making
