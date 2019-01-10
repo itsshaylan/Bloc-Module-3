@@ -1,0 +1,248 @@
+6. Build a system that allows a sales associate to enter a customer's name, address, and phone number into the system and look up customers using their phone numbers. Store this information in a hash table.
+
+var hash = function (string, maxBucket){
+  let hash = 0;
+  for(var i = 0; i < string.length; i++){
+    hash += string.charCodeAt(i);
+  }
+  return hash % maxBucket;
+}
+
+
+class HashTable{
+  constructor(maxBucket){
+    this.storage = [];
+    this.maxBucket = maxBucket;
+    this.size = 0;
+  }
+
+  add(key, value){
+    let index = hash(key, this.maxBucket);
+    let bucket = this.storage[index];
+
+    if(!bucket){
+      bucket = [];
+      bucket.push(key,value);
+      this.storage[index] = bucket;
+      this.size++;
+      return this;
+    }
+    else if (bucket[0] === key){
+        bucket[1] = value;
+    }
+    else{
+      console.log(`"${key}" resulting in collision; try another key!`);
+    }
+  }
+
+  retrieve(key){
+    let index = hash(key, this.maxBucket);
+    console.log(`Retrieved customer data: ${this.storage[index]}`);
+    return this.storage[index];
+  }
+
+  lookUp(phone){
+    for(let i=0; i<this.maxBucket; i++){
+      let bucket = this.storage[i]
+      if((bucket) && (bucket[1].phone === phone)){
+        return(this.retrieve(bucket[0]));
+      }
+    }
+  }
+}
+
+
+var customerData = new HashTable(12);
+
+customerData.add('customer1', {
+	name: 'Julie Ni', 
+	address: 'Blah blah blah, Wichita, KS', 
+	phone: 3165193910
+});
+
+customerData.add('customer2', {
+	name: 'Christian Withers', 
+	address: 'Some street, Wichita, KS', 
+	phone: 3165167802
+});
+
+customerData.lookUp(3165193910);
+customerData.lookUp(3165167802);
+console.log(customerData);
+
+
+
+7. Build a system that allows a store owner to track their store's inventory using a hash table for storage.
+
+var hash = function (string, maxBucket){
+  let hash = 0;
+  for(var i = 0; i < string.length; i++){
+    hash += string.charCodeAt(i);
+  }
+  return hash % maxBucket;
+}
+
+
+class HashTable{
+  constructor(maxBucket){
+    this.storage = [];
+    this.maxBucket = maxBucket;
+    this.size = 0;
+  }
+
+
+  add(key, value){
+    let index = hash(key, this.maxBucket);
+    let bucket = this.storage[index];
+
+    if(!bucket){
+      bucket = [];
+      bucket.push(key,value);
+      this.storage[index] = bucket;
+      this.size++;
+      return this;
+    }
+    else if (bucket[0] === key){
+        bucket[1] = value;
+    }
+    else{
+      console.log(`"${key}" resulting in collision; try another key!`);
+    }
+  }
+
+  retrieve(key){
+    let index = hash(key, this.maxBucket);
+    console.log(`Retrieved inventory data: ${this.storage[index]}`);
+    return this.storage[index];
+  }
+
+  lookUp(item){
+    for(let i=0; i<this.maxBucket; i++){
+      let bucket = this.storage[i]
+      if((bucket) && (bucket[1].item === item)){
+        return(this.retrieve(bucket[0]));
+      }
+    }
+  }
+}
+
+
+var inventoryData = new HashTable(12);
+
+inventoryData.add('Item 1', {
+	item: 'Gatorade', 
+	flavor: 'ice glacier', 
+	qty: 30
+});
+
+inventoryData.add('Item 2', {
+	item: 'Chocolate', 
+	flavor: 'dark', 
+	qty: 42
+});
+
+inventoryData.lookUp('Gatorade');
+inventoryData.lookUp('Chocolate');
+
+console.log(inventoryData);
+
+
+8. Build a system that allows digital copies of newspapers to be entered and searched by publisher and publication date.
+Use hash tables to store the necessary data.
+
+var hash = function (string, maxBucket){
+  let hash = 0;
+  for(var i = 0; i < string.length; i++){
+    hash += string.charCodeAt(i);
+  }
+  return hash % maxBucket;
+}
+
+
+class HashTable{
+  constructor(maxBucket){
+    this.storage = [];
+    this.maxBucket = maxBucket;
+    this.size = 0;
+  }
+
+
+  add(key, value){
+    let index = hash(key, this.maxBucket);
+    let bucket = this.storage[index];
+
+    if(!bucket){
+      bucket = [];
+      bucket.push(key,value);
+      this.storage[index] = bucket;
+      this.size++;
+      return this;
+    }
+    else if (bucket[0] === key){
+        bucket[1] = value;
+    }
+    else{
+      console.log(`"${key}" resulting in collision; try another key!`);
+    }
+  }
+
+  remove(article){
+    for(let i=0; i<this.maxBucket; i++){
+      let bucket = this.storage[i]
+      if((bucket) && (bucket[1].title === article)){
+        bucket = undefined;
+        this.storage[i]=bucket;
+        this.size--;
+        return this.storage;
+      }
+    }
+  }
+
+  retrieve(key){
+    let index = hash(key, this.maxBucket);
+    console.log(`Retrieved news data for key ${key}: ${this.storage[index]}`);
+    return this.storage[index];
+  }
+
+  lookUp(info){
+    let relevantArticles = [];
+    for(let i=0; i<this.maxBucket; i++){
+      let bucket = this.storage[i];
+      if((bucket) && (bucket[1].date === info || bucket[1].publisher === info)){
+        var article = bucket;
+        relevantArticles.push(article[1].title);
+      }
+      article = undefined;
+    }
+    console.log(`Retrieved news article for ${info}: ${relevantArticles}`);
+    return relevantArticles;
+  }
+}
+
+
+var news = new HashTable(12);
+news.add('newsItem1', {
+	title: "How to Raise the Best Bunnies", 
+	date: '08/21/2018', 
+	author: 'George Bunnington', 
+	publisher: 'Bunnies Galore'
+});
+
+news.add('newsItem2', {
+	title: 'My Bunny is Better Than Yours', 
+	date: '01/02/2014', 
+	author: 'Bun Gogh', 
+	publisher: 'Theres a Hare in my Boot'
+});
+
+news.add('newsItem3', {
+	title: 'Bunnies, Bunnies, and More Bunnies', 
+	date: '11/25/1997', 
+	author: 'John Bunnay Ramsay', 
+	publisher: 'Rabbit Season'
+});
+
+news.lookUp('Bunnies Galore');
+news.lookUp('11/25/1997');
+
+console.log(news);
