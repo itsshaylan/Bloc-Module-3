@@ -24,7 +24,7 @@ An unweighted graph is where the edges don't have a cost or weight. With a weigh
 
 6. What kind of graph is a binary search tree?
 
-A binary search tree is an example of a a-cyclic graph. 
+A binary search tree is an example of a a-cyclic graph, unweighted, and directed graph. 
 
 PROGRAMMING QUESTIONS
 
@@ -32,55 +32,216 @@ PROGRAMMING QUESTIONS
 
 We will start out with the root node. If that number doesn't equal what we're searching for, then we will travel to the left node if the value is smaller than the root node's number. If the value is bigger, we will travel to the right child of the root. We will continue this process until we find the node. Exit the loop. If the value is not found, we'll return a statement. 
 
-function findNumber(numberToFind) {
-  var currentNode = this.root;
-
-  while (currentNode != null) {
-    if (numberToFind === currentNode.value) {
-      return "The value " + currentNode.value + " exists in the list";
-    } else if (numberToFind < currentNode.value){
-      currentNode = currentNode.left;
-    } else {
-      currentNode = currentNode.right;
+class Node{
+      constructor(value, left = null, right = null){
+        this.value = value;
+        this.left = left;
+        this.right = right;
+      }
     }
-  }
-  return "The value " + numberToFind + " does not exist in the list";
-}
+
+class BinarySearchTree{
+      constructor(){
+        this.root = null;
+      }
+
+      addNode(value){
+        let node = this.root;
+        if(node === null){
+          this.root = new Node(value);
+          return;
+        }
+        else{
+          this.searchTree(node, value);
+        }
+      }
+
+      searchTree(node, value){
+        if(value > node.value){
+          if(node.right === null){
+            node.right = new Node(value);
+            return;
+          }
+          else {
+            while(node.right !== null){
+              return this.searchTree(node.right, value);
+            }
+          }
+        }
+        else if(value < node.value){
+          if(node.left === null){
+            node.left = new Node(value);
+            return;
+          }
+          else {
+            while(node.left !== null){
+              return this.searchTree(node.left, value);
+            }
+          }
+        }
+        else{
+          return null;
+        }
+      }
+
+      search(value, node = this.root){
+        if(node.value === value){
+          console.log(`${value} exists in the tree`);
+          return `${value} exists in the tree`;
+        }
+        else if(value > node.value){
+          while(node.right){
+            node = node.right;
+            return this.search(value, node);
+          }
+          console.log(`${value} does not exist in the tree`);
+          return `${value} does not exist in the tree`;
+        }
+        else if(value < node.value){
+          while(node.left){
+            node = node.left;
+            return this.search(value, node);
+          }
+          console.log(`${value} does not exist in the tree`);
+          return `${value} does not exist in the tree`;
+        }
+      }
+    }
+
+
+var tree = new BinarySearchTree();
+tree.addNode(5);
+tree.addNode(12);
+tree.addNode(1);
+tree.addNode(15);
+tree.addNode(7);
+tree.addNode(4);
+tree.addNode(2);
+tree.addNode(9);
+console.log(tree);
+tree.search(15);
+tree.search(5);
+tree.search(9);
+tree.search(0);
 
 2. Given a Binary Search Tree and two nodes, n1 and n2, write a function that finds the distance between the two nodes.
 
 This one is kind of similar to the first problem in a way. We do need to know the lowest common ancestor of the two nodes because it would tell us the path to take. 
 
-function getDistanace(root, node1, node2) {
-
-  var ancestor = LCA(root, node1, node2);
-  var depth1 = getDepth(root, ancestor); 
-  var depth2 = getDepth(root, node1); 
-  var depth3 = getDepth(root, node2); 
-
-  return depth2 + depth3 - 2 * depth1;
+class Node{
+  constructor(value, left = null, right = null){
+    this.value = value;
+    this.left = left;
+    this.right = right;
+  }
 }
 
-function LCA(currentNode, node1, node2) {
-  if (currentNode == null)
-    return null;
-  if (currentNode == node1 || currentNode == node2)
-    return currentNode;
-  var left = LCA(currentNode.left, node1, node2); 
-  var right = LCA(currentNode.right, node1, node2); 
-  if(left != null && right != null)
-    return currentNode;
-  return left == null? right: left;
+
+class BinarySearchTree{
+  constructor(){
+    this.root = null;
+  }
+
+  addNode(value){
+    let node = this.root;
+    if(node === null){
+      this.root = new Node(value);
+      return;
+    }
+    else{
+      this.searchTree(node, value);
+    }
+  }
+
+  searchTree(node, value){
+    if(value > node.value){
+      if(node.right === null){
+        node.right = new Node(value);
+        return;
+      }
+      else {
+        while(node.right !== null){
+          return this.searchTree(node.right, value);
+        }
+      }
+    }
+    else if(value < node.value){
+      if(node.left === null){
+        node.left = new Node(value);
+        return;
+      }
+      else {
+        while(node.left !== null){
+          return this.searchTree(node.left, value);
+        }
+      }
+    }
+    else{
+      return null;
+    }
+  }
+
+  findDistance(node1, node2){
+    let node = this.root;
+    var searchValue;
+    if(node1 === node.value || node2 === node.value){
+      var distance = 0;
+      (node1 === node.value) ? searchValue = node2 : searchValue = node1;
+      distance = this.calcDistance(searchValue, node, distance);
+      console.log(`distance between ${node1} and ${node2}: ${distance}`);
+      return distance;
+    }
+    else {
+      var distance = 0;
+      let distance1 = 0;
+      let distance2 = 0;
+      searchValue = node1;
+      distance1 = this.calcDistance(searchValue, node, distance);
+      searchValue = node2;
+      distance = this.calcDistance(searchValue, node, distance1);
+      console.log(`distance between ${node1} and ${node2}: ${distance}`);
+      return distance;
+    }
+  }
+
+  calcDistance(searchValue, node, distance){
+    if(searchValue === node.value){
+      return distance;
+    }
+    else if(searchValue > node.value){
+      while(node.right){
+        node = node.right;
+        distance++;
+        return this.calcDistance(searchValue, node, distance);
+      }
+      console.log(`${searchValue} does not exist in the tree`);
+      return;
+    }
+    else if(searchValue  < node.value){
+      while(node.left){
+        node = node.left;
+        distance++;
+        return this.calcDistance(searchValue, node, distance);
+      }
+      console.log(`${searchValue} does not exist in the tree`);
+      return;
+    }
+  }
 }
 
-function getDepth(currentNode, targetNode) {
-  if (currentNode == null)
-    return -1;
-  if (currentNode == targetNode)
-    return 0;
-  var left = getDepth(currentNode.left, targetNode);
-  var right = getDepth(currentNode.right, targetNode);
-  if (left == -1 && right == -1)
-    return -1;
-  return left == -1? right + 1: left + 1;
-}
+
+var tree = new BinarySearchTree();
+tree.addNode(1);
+tree.addNode(8);
+tree.addNode(6);
+tree.addNode(12);
+tree.addNode(4);
+tree.addNode(14);
+tree.addNode(2);
+tree.addNode(19);
+tree.addNode(20);
+console.log(tree);
+tree.findDistance(8,12);
+tree.findDistance(4,14);
+tree.findDistance(6,20);
+tree.findDistance(1,2);
