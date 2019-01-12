@@ -12,7 +12,7 @@ An example of binary search in real life is when you're trying to check out a bo
 
 4. Given the alphabetically sorted collection in this checkpoint, how many iterations would it take to find the value G using binary search?
 
-5th iteration
+3rd iteration
 
 5.Given an unsorted collection of a million items, which algorithm would you choose between linear search and binary search? Explain your reasoning.
 
